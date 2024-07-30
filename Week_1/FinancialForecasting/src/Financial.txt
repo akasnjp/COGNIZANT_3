@@ -1,0 +1,39 @@
+Concept of Recursion
+Definition: Recursion is a technique where a method calls itself in order to solve smaller instances of the same problem. The key idea is to break down a complex problem into simpler sub-problems, solve those, and combine their results.
+
+Base Case: The condition under which the recursion stops. This prevents infinite recursion and eventual stack overflow.
+
+Recursive Case: The part of the algorithm where the method calls itself with a simpler or smaller input.
+
+Advantages:
+
+Simplifies code for problems that can be divided into similar sub-problems, like tree traversal or solving mathematical sequences.
+Often makes the code more elegant and easier to understand.
+Disadvantages:
+
+Recursive algorithms can be less efficient than iterative solutions due to the overhead of multiple function calls.
+May lead to stack overflow if the recursion depth is too deep
+
+
+Implementation
+The calculateFutureValue method computes the future value of an investment with a given principal, annual growth rate, and number of years. It uses recursion to apply the growth rate to the principal for each year until it reaches the base case (years == 0).
+
+Base Case: When years is 0, return the principal as the future value.
+Recursive Case: Calculate the future value by applying the growth rate and reducing the number of years by 1.
+
+
+
+ANALYSIS
+Time Complexity
+Time Complexity: O(n), where 
+𝑛
+n is the number of years. This is because each recursive call reduces the problem size by 1 and performs a constant amount of work.
+
+Space Complexity: O(n) due to the call stack for each recursive call.
+
+Optimizing Recursive Solution
+Memoization: Store results of previous calculations to avoid redundant computations. This technique is often used in dynamic programming but requires more space.
+
+Tail Recursion: If possible, use tail recursion (where the recursive call is the last operation in the function). This can be optimized by the compiler to avoid additional stack frames.
+
+Iterative Approach: Sometimes converting a recursive algorithm to an iterative one can be more efficient, especially for problems with deep recursion.
