@@ -1,0 +1,33 @@
+Linear Search
+Definition: A straightforward search algorithm that checks each element of a list one by one until the desired element is found or the list ends.
+Time Complexity: O(n), where 
+𝑛
+n is the number of elements in the list.
+Best Case: O(1) - The element is found at the first position.
+Worst Case: O(n) - The element is found at the last position or not found at all.
+Advantages: Simple to implement and does not require the data to be sorted.
+Disadvantages: Inefficient for large lists compared to binary search.
+Binary Search
+Definition: A search algorithm that repeatedly divides a sorted list in half to locate a desired element.
+Time Complexity: O(log n), where 
+𝑛
+n is the number of elements in the list.
+Best Case: O(1) - The element is found at the middle of the list.
+Worst Case: O(log n) - The list is divided until the element is found or the sublist is empty.
+Advantages: Much faster than linear search for large lists if the data is sorted.
+Disadvantages: Requires the list to be sorted and more complex to implement.
+
+
+Analysis
+Time Complexity
+Linear Search: O(n) for both best and worst cases.
+Binary Search: O(log n) for both best and worst cases (assuming the list is sorted).
+When to Use Each Algorithm
+Linear Search:
+
+Use when the list is unsorted or small.
+Suitable for cases where simplicity is more important than speed.
+Binary Search:
+
+Use when the list is large and sorted.
+Preferred for faster search operations in large datasets.
