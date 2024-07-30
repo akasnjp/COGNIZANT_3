@@ -1,0 +1,30 @@
+ Understand Asymptotic Notation
+Big O Notation
+Big O notation is a mathematical notation used to describe the upper bound of an algorithm's running time or space requirements in terms of the input size. It helps in analyzing the performance and efficiency of algorithms by focusing on the growth rate as the input size increases.
+
+Examples of Big O Notation:
+
+O(1): Constant time complexity, where the running time does not change with the input size.
+O(n): Linear time complexity, where the running time grows linearly with the input size.
+O(log n): Logarithmic time complexity, where the running time grows logarithmically with the input size.
+O(n^2): Quadratic time complexity, where the running time grows quadratically with the input size.
+Best, Average, and Worst-Case Scenarios for Search Operations
+Best Case: The scenario where the algorithm performs the minimum number of operations. For example, in a linear search, the best case occurs when the target element is the first element in the array (O(1)).
+Average Case: The scenario where the algorithm performs an average number of operations over all possible inputs. For a linear search, the average case is when the target element is in the middle of the array (O(n/2)).
+Worst Case: The scenario where the algorithm performs the maximum number of operations. In a linear search, the worst case occurs when the target element is the last element or not present in the array at all (O(n)).
+
+
+ANALYSIS
+Compare the Time Complexity of Linear and Binary Search Algorithms
+Linear Search:
+
+Best Case: O(1) - when the target element is the first element in the array.
+Average Case: O(n/2) - when the target element is in the middle of the array.
+Worst Case: O(n) - when the target element is the last element or not present in the array.
+Binary Search:
+
+Best Case: O(1) - when the target element is the middle element.
+Average and Worst Case: O(log n) - because the array is repeatedly divided in half.
+Which Algorithm is More Suitable for Your Platform and Why
+Linear Search is suitable for small or unsorted datasets because it does not require the array to be sorted and is simple to implement.
+Binary Search is more suitable for large, sorted datasets due to its logarithmic time complexity, which makes it much faster than linear search for large arrays. However, it requires the array to be sorted beforehand, which may add additional overhead.
