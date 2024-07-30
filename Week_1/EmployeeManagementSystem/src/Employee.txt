@@ -1,0 +1,21 @@
+How Arrays are Represented in Memory
+Contiguous Memory Allocation: Arrays are stored in contiguous memory locations. This means all elements are stored sequentially in memory.
+Indexing: Elements in an array are accessed using an index. The first element is at index 0, the second at index 1, and so on.
+Fixed Size: The size of an array is fixed at the time of creation and cannot be changed.
+Advantages of Arrays
+Constant Time Access: Accessing an element by its index is an O(1) operation.
+Predictable Memory Usage: Since arrays are of fixed size, it is easy to predict and manage memory usage.
+
+
+Analysis
+Time Complexity
+Add: O(1) - Adding an element at the end of the array.
+Search: O(n) - Linear search to find an element.
+Traverse: O(n) - Traversing all elements.
+Delete: O(n) - Searching for an element and shifting elements.
+Limitations of Arrays
+Fixed Size: The size of an array is fixed and cannot be changed once allocated. This can lead to wasted memory or insufficient capacity.
+Inefficient Insertions and Deletions: Inserting or deleting elements from an array requires shifting elements, which can be inefficient.
+When to Use Arrays
+Constant Time Access: When you need fast access to elements using an index.
+Fixed Number of Elements: When the number of elements is known and fixed.
