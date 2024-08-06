@@ -1,0 +1,78 @@
+DECLARE
+    -- Function to calculate the age of a customer
+    FUNCTION CalculateAge (p_dob DATE) RETURN NUMBER IS
+        v_age NUMBER;
+    BEGIN
+        SELECT FLOOR(MONTHS_BETWEEN(SYSDATE, p_dob) / 12) INTO v_age FROM dual;
+        RETURN v_age;
+    END;
+
+    -- Function to calculate the monthly installment for a loan
+    FUNCTION CalculateMonthlyInstallment (
+        p_loan_amount NUMBER,
+        p_annual_interest_rate NUMBER,
+        p_loan_duration_years NUMBER
+    ) RETURN NUMBER IS
+        v_monthly_installment NUMBER;
+        v_monthly_interest_rate NUMBER := p_annual_interest_rate / 12 / 100;
+        v_total_payments NUMBER := p_loan_duration_years * 12;
+    BEGIN
+        IF v_monthly_interest_rate = 0 THEN
+            v_monthly_installment := p_loan_amount / v_total_payments;
+        ELSE
+            v_monthly_installment := (p_loan_amount * v_monthly_interest_rate) / (1 - POWER(1 + v_monthly_interest_rate, -v_total_payments));
+        END IF;
+        RETURN v_monthly_installment;
+    END;
+
+    -- Function to check if an account has sufficient balance
+    FUNCTION HasSufficientBalance (
+        p_account_id NUMBER,
+        p_amount NUMBER
+    ) RETURN BOOLEAN IS
+        v_balance NUMBER;
+        v_has_sufficient_balance BOOLEAN;
+    BEGIN
+        SELECT balance INTO v_balance
+        FROM accounts
+        WHERE account_id = p_account_id;
+
+        IF v_balance >= p_amount THEN
+            v_has_sufficient_balance := TRUE;
+        ELSE
+            v_has_sufficient_balance := FALSE;
+        END IF;
+
+        RETURN v_has_sufficient_balance;
+    END;
+
+    -- Variables for testing purposes
+    v_dob DATE := TO_DATE('1990-01-01', 'YYYY-MM-DD'); -- Example date of birth
+    v_age NUMBER;
+    v_loan_amount NUMBER := 10000; -- Example loan amount
+    v_annual_interest_rate NUMBER := 5; -- Example annual interest rate
+    v_loan_duration_years NUMBER := 5; -- Example loan duration in years
+    v_monthly_installment NUMBER;
+    v_account_id NUMBER := 1; -- Example account ID
+    v_amount NUMBER := 500; -- Example amount to check
+    v_has_sufficient_balance BOOLEAN;
+
+BEGIN
+    -- Test CalculateAge function
+    v_age := CalculateAge(v_dob);
+    DBMS_OUTPUT.PUT_LINE('Customer Age: ' || v_age);
+
+    -- Test CalculateMonthlyInstallment function
+    v_monthly_installment := CalculateMonthlyInstallment(v_loan_amount, v_annual_interest_rate, v_loan_duration_years);
+    DBMS_OUTPUT.PUT_LINE('Monthly Installment: ' || v_monthly_installment);
+
+    -- Test HasSufficientBalance function
+    v_has_sufficient_balance := HasSufficientBalance(v_account_id, v_amount);
+    IF v_has_sufficient_balance THEN
+        DBMS_OUTPUT.PUT_LINE('Account ID ' || v_account_id || ' has sufficient balance.');
+    ELSE
+        DBMS_OUTPUT.PUT_LINE('Account ID ' || v_account_id || ' does not have sufficient balance.');
+    END IF;
+
+END;
+/

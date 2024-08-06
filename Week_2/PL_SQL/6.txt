@@ -1,0 +1,81 @@
+DECLARE
+    -- Scenario 1: Generate Monthly Statements
+    CURSOR cur_transactions IS
+        SELECT DISTINCT account_id
+        FROM transactions
+        WHERE EXTRACT(MONTH FROM transaction_date) = EXTRACT(MONTH FROM SYSDATE)
+        AND EXTRACT(YEAR FROM transaction_date) = EXTRACT(YEAR FROM SYSDATE);
+
+    v_account_id transactions.account_id%TYPE;
+    v_transaction_amount transactions.amount%TYPE;
+
+    -- Scenario 2: Apply Annual Fee
+    CURSOR cur_accounts IS
+        SELECT account_id, balance
+        FROM accounts;
+
+    v_balance accounts.balance%TYPE;
+    v_fee NUMBER := 50; -- Example annual fee amount
+
+    -- Scenario 3: Update Loan Interest Rates
+    CURSOR cur_loans IS
+        SELECT loan_id, interest_rate
+        FROM loans;
+
+    v_interest_rate loans.interest_rate%TYPE;
+    v_new_interest_rate NUMBER := 6; -- Example new interest rate policy
+
+BEGIN
+    -- Scenario 1: Generate Monthly Statements
+    FOR rec_transactions IN cur_transactions LOOP
+        v_account_id := rec_transactions.account_id;
+
+        -- Fetch all transactions for the current month for the account
+        FOR rec_transactions_details IN (
+            SELECT transaction_date, amount
+            FROM transactions
+            WHERE account_id = v_account_id
+            AND EXTRACT(MONTH FROM transaction_date) = EXTRACT(MONTH FROM SYSDATE)
+            AND EXTRACT(YEAR FROM transaction_date) = EXTRACT(YEAR FROM SYSDATE)
+        ) LOOP
+            v_transaction_amount := rec_transactions_details.amount;
+            DBMS_OUTPUT.PUT_LINE('Account ID: ' || v_account_id || ', Transaction Date: ' || rec_transactions_details.transaction_date || ', Amount: ' || v_transaction_amount);
+        END LOOP;
+
+        -- Print a statement for each customer (account)
+        DBMS_OUTPUT.PUT_LINE('Monthly statement generated for Account ID: ' || v_account_id);
+    END LOOP;
+
+    -- Scenario 2: Apply Annual Fee
+    FOR rec_accounts IN cur_accounts LOOP
+        v_balance := rec_accounts.balance;
+
+        -- Deduct the annual fee from the balance
+        UPDATE accounts
+        SET balance = balance - v_fee
+        WHERE account_id = rec_accounts.account_id;
+
+        DBMS_OUTPUT.PUT_LINE('Annual fee applied to Account ID: ' || rec_accounts.account_id);
+    END LOOP;
+
+    -- Scenario 3: Update Loan Interest Rates
+    FOR rec_loans IN cur_loans LOOP
+        v_interest_rate := rec_loans.interest_rate;
+
+        -- Update the interest rate for all loans
+        UPDATE loans
+        SET interest_rate = v_new_interest_rate
+        WHERE loan_id = rec_loans.loan_id;
+
+        DBMS_OUTPUT.PUT_LINE('Interest rate updated for Loan ID: ' || rec_loans.loan_id || ', New Interest Rate: ' || v_new_interest_rate);
+    END LOOP;
+
+    -- Commit the transactions
+    COMMIT;
+
+EXCEPTION
+    WHEN OTHERS THEN
+        ROLLBACK;
+        DBMS_OUTPUT.PUT_LINE('Error: An unexpected error occurred.');
+END;
+/
