@@ -12,5 +12,26 @@
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
     </properties>
+<!-- <dependencies>
+  Spring Boot Starter Web for building web, including 
+RESTful, applications using Spring MVC -->
+ <dependency>
+ <groupId>org.springframework.boot</groupId>
+ <artifactId>spring-boot-starter-web</artifactId>
+ </dependency>
+ <!-- Spring Boot DevTools for automatic restart and live 
+reload -->
+ <dependency>
+ <groupId>org.springframework.boot</groupId>
+ <artifactId>spring-boot-devtools</artifactId>
+ <optional>true</optional>
+ </dependency>
+ <!-- Lombok for reducing boilerplate code -->
+ <dependency>
+ <groupId>org.projectlombok</groupId>
+ <artifactId>lombok</artifactId>
+ <version>1.18.24</version>
+ <scope>provided</scope>
+ </dependency>
 
 </project>
